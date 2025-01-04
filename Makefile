@@ -4,7 +4,7 @@ DOCKER_DB_NAME=sunny
 DB_NAME=SunnyContest
 DB_URL=postgresql://root:secret@localhost:5432/SunnyContest?sslmode=disable
 
-.PHONY: postgres createdb dropdb migrateup migratedown
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc db
 
 run:
 	go run ./cmd/${APP_NAME}/
@@ -33,3 +33,7 @@ migratedown:
 # Định nghĩa sqlc gen
 sqlc:
 	sqlc generate
+
+# Chạy các service docker
+db:
+	docker start sunny

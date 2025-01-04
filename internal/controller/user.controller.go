@@ -1,19 +1,12 @@
 package controller
 
 import (
+	"SunnyContest/internal/dto"
 	"SunnyContest/internal/services"
+	rp "SunnyContest/response"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
-
-type RegisterUserRequest struct {
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=8"`
-}
-
-type LoginUserRequest struct {
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=8"`
-}
 
 type UserController struct {
 	userService services.IUserService
@@ -24,23 +17,30 @@ func NewUserController(userService services.IUserService) *UserController {
 }
 
 func (uc *UserController) Register(ctx *gin.Context) {
-	var req RegisterUserRequest
+	var req *dto.RegisterUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(200, gin.H{"error": "Invalid request"})
+		return
+	}
+
+	user, err := uc.userService.Register(ctx, req)
+	if err != nil {
+		rsp, status := rp.HandleErrorResponse(err)
+		fmt.Println(rsp, status)
+		ctx.JSON(status, rsp)
 		return
 	}
 
 	// Register
-	ctx.JSON(200, gin.H{"register": "successfully registered"})
+	ctx.JSON(200, rp.SuccessResponseData(user))
 }
 
 func (uc *UserController) Login(ctx *gin.Context) {
-	var req LoginUserRequest
+	var req dto.LoginUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(200, gin.H{"error": "Invalid request"})
 		return
 	}
-
 	// Login
 	ctx.JSON(200, gin.H{"login": "successfully logged in"})
 }

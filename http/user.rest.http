@@ -1,4 +1,4 @@
-@base=http://localhost:8080/v1/api/
+@base=http://localhost:8080/v1/api
 
 
 ### Register
@@ -6,6 +6,6 @@ POST {{base}}/user/register
 Content-Type: application/json
 
 {
-  "email": "johndoe@gmail.com",
+  "username": "HIuec cpcy",
   "password": "johndoe446"
 }

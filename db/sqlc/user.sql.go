@@ -7,8 +7,6 @@ package db
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const changePassword = `-- name: ChangePassword :one
@@ -47,12 +45,12 @@ VALUES ($1, $2, $3, $4, $5, $6, now(), now())
 `
 
 type CreateUserParams struct {
-	Username     string      `json:"username"`
-	Password     string      `json:"password"`
-	Role         int32       `json:"role"`
-	Status       int32       `json:"status"`
-	Token        pgtype.Text `json:"token"`
-	TokenExpried pgtype.Int8 `json:"token_expried"`
+	Username     string `json:"username"`
+	Password     string `json:"password"`
+	Role         int32  `json:"role"`
+	Status       int32  `json:"status"`
+	Token        string `json:"token"`
+	TokenExpried int64  `json:"token_expried"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (SfUser, error) {
@@ -143,13 +141,13 @@ WHERE id = $7
 `
 
 type UpdateUserParams struct {
-	Username     string      `json:"username"`
-	Password     string      `json:"password"`
-	Role         int32       `json:"role"`
-	Status       int32       `json:"status"`
-	Token        pgtype.Text `json:"token"`
-	TokenExpried pgtype.Int8 `json:"token_expried"`
-	ID           int64       `json:"id"`
+	Username     string `json:"username"`
+	Password     string `json:"password"`
+	Role         int32  `json:"role"`
+	Status       int32  `json:"status"`
+	Token        string `json:"token"`
+	TokenExpried int64  `json:"token_expried"`
+	ID           int64  `json:"id"`
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (SfUser, error) {

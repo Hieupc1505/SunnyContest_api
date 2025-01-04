@@ -3,3 +3,4 @@ config/*.yaml
 
 rests
 .idea
+storages/logs

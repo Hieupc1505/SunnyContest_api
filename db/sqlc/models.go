@@ -6,18 +6,16 @@ package db
 
 import (
 	"time"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type SfUser struct {
-	ID           int64       `json:"id"`
-	Username     string      `json:"username"`
-	Password     string      `json:"password"`
-	Role         int32       `json:"role"`
-	Status       int32       `json:"status"`
-	Token        pgtype.Text `json:"token"`
-	TokenExpried pgtype.Int8 `json:"token_expried"`
-	CreatedTime  time.Time   `json:"created_time"`
-	UpdatedTime  time.Time   `json:"updated_time"`
+	ID           int64     `json:"id"`
+	Username     string    `json:"username"`
+	Password     string    `json:"password"`
+	Role         int32     `json:"role"`
+	Status       int32     `json:"status"`
+	Token        string    `json:"token"`
+	TokenExpried int64     `json:"token_expried"`
+	CreatedTime  time.Time `json:"created_time"`
+	UpdatedTime  time.Time `json:"updated_time"`
 }

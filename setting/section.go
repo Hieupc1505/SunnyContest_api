@@ -2,7 +2,7 @@ package setting
 
 type Config struct {
 	Server ServerSetting   `mapstructure:"server"`
-	PgDb   PostgresSetting `mapstructure:"postgres"`
+	PgDb   PostgresSetting `mapstructure:"postgresql"`
 	Logger LoggerSetting   `mapstructure:"logger"`
 }
 
