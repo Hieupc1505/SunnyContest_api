@@ -1,4 +1,10 @@
-package response
+package rspx
+
+import (
+	"errors"
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
 
 type Response struct {
 	Errors interface{} `json:"e"`
@@ -9,28 +15,37 @@ type MsgError struct {
 	Msg string `json:"msg,omitempty"`
 }
 
-func SuccessResponseData(data interface{}) Response {
+func NewSucessResponse(data interface{}) Response {
 	return Response{
-		Errors: 0,
+		Errors: Success,
 		Data:   data,
 	}
 }
 
-func ErrorResponseData(err ErrorDetail) Response {
+func ErrorResponseData(err *ErrorDetail) Response {
 	return Response{
 		Errors: err.Code,
 		Data:   MsgError{Msg: err.Message},
 	}
 }
 
-func HandleErrorResponse(err error) (Response, int) {
-	switch e := err.(type) {
-	case ErrorDetail:
-		return ErrorResponseData(e), e.Status
+func SuccessResponse(ctx *gin.Context, data interface{}) {
+	ctx.JSON(http.StatusOK, NewSucessResponse(data))
+}
+
+func ErrorResponse(ctx *gin.Context, err error) {
+	var e *ErrorDetail
+	var data Response
+	status := http.StatusInternalServerError
+	switch {
+	case errors.As(err, &e):
+		data = ErrorResponseData(e)
+		status = e.Status
 	default:
-		return ErrorResponseData(ErrorDetail{
-			Code:    500,
-			Message: GetError("System", "SystemError").Error(),
-		}), 500
+		data = ErrorResponseData(&ErrorDetail{
+			Code:    System,
+			Message: err.Error(),
+		})
 	}
+	ctx.JSON(status, data)
 }

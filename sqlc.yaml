@@ -19,4 +19,4 @@ sql:
           - column: "sf_user.token"
             go_type: "string"
           - column: "sf_user.token_expried"
-            go_type: "int64"
+            go_type: "time.Time"

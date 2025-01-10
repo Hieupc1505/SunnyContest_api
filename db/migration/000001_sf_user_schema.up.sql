@@ -5,7 +5,7 @@ CREATE TABLE "sf_user" (
     "role" int NOT NULL,
     "status" int NOT NULL,
     "token" varchar,
-    "token_expried" bigint,
+    "token_expried" timestamptz,
     "created_time" timestamptz NOT NULL DEFAULT (now()),
     "updated_time" timestamptz NOT NULL DEFAULT (now())
 );

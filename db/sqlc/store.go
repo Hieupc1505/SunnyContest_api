@@ -1,6 +1,13 @@
 package db
 
-import "github.com/jackc/pgx/v5/pgxpool"
+import (
+	"fmt"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+var (
+	SYSTEM_ERROR = fmt.Errorf("system_error")
+)
 
 type Store interface {
 	Querier

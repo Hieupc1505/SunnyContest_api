@@ -1,10 +1,10 @@
 package controller
 
 import (
+	db "SunnyContest/db/sqlc"
 	"SunnyContest/internal/dto"
 	"SunnyContest/internal/services"
 	rp "SunnyContest/response"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,28 +19,27 @@ func NewUserController(userService services.IUserService) *UserController {
 func (uc *UserController) Register(ctx *gin.Context) {
 	var req *dto.RegisterUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(200, gin.H{"error": "Invalid request"})
+		rp.ErrorResponse(ctx, db.SYSTEM_ERROR)
 		return
 	}
 
 	user, err := uc.userService.Register(ctx, req)
 	if err != nil {
-		rsp, status := rp.HandleErrorResponse(err)
-		fmt.Println(rsp, status)
-		ctx.JSON(status, rsp)
+		rp.ErrorResponse(ctx, err)
 		return
 	}
 
 	// Register
-	ctx.JSON(200, rp.SuccessResponseData(user))
+	rp.SuccessResponse(ctx, user)
 }
 
 func (uc *UserController) Login(ctx *gin.Context) {
 	var req dto.LoginUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(200, gin.H{"error": "Invalid request"})
+		rp.ErrorResponse(ctx, db.SYSTEM_ERROR)
 		return
 	}
 	// Login
-	ctx.JSON(200, gin.H{"login": "successfully logged in"})
+	//ctx.JSON(200, gin.H{"login": "successfully logged in"})
+	rp.SuccessResponse(ctx, gin.H{"login": "successfully logged in"})
 }

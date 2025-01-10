@@ -1,5 +1,5 @@
 -- name: GetUserByEmail :one
-SELECT id, username, password, role, status, token, token_expried, created_time, updated_time
+SELECT id, username, role, status
 FROM sf_user
 WHERE username = $1;
 

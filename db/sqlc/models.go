@@ -15,7 +15,7 @@ type SfUser struct {
 	Role         int32     `json:"role"`
 	Status       int32     `json:"status"`
 	Token        string    `json:"token"`
-	TokenExpried int64     `json:"token_expried"`
+	TokenExpried time.Time `json:"token_expried"`
 	CreatedTime  time.Time `json:"created_time"`
 	UpdatedTime  time.Time `json:"updated_time"`
 }

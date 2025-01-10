@@ -12,7 +12,7 @@ type Querier interface {
 	ChangePassword(ctx context.Context, arg ChangePasswordParams) (SfUser, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (SfUser, error)
 	DeleteUser(ctx context.Context, id int64) error
-	GetUserByEmail(ctx context.Context, username string) (SfUser, error)
+	GetUserByEmail(ctx context.Context, username string) (GetUserByEmailRow, error)
 	GetUserByID(ctx context.Context, id int64) (SfUser, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (SfUser, error)
 }
